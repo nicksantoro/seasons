@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import SeasonDisplay from './SeasonDisplay';
+import Spinner from './Spinner';
 
 class App extends Component {
 
@@ -31,18 +32,26 @@ class App extends Component {
     console.log('My component was just updated - it rerendered!')
   }
 
-  render() {
-
+  renderContent() {
     if (this.state.errorMessage && (!this.state.lat || !this.state.long)) {
       return <div className="App"><div>Error: {this.state.errorMessage}</div></div>
     }
-
     if (!this.state.errorMessage && this.state.lat && this.state.long) {
       // return <div className="App"><div>My Location:</div><div>Latitude: {this.state.lat}</div> <div>Longitude: {this.state.long}</div></div>
       return <SeasonDisplay lat={this.state.lat} />
     }
+    return <div className="App"><div><Spinner message="Please accept location request" /></div></div>
+  }
 
-    return <div className="App"><div>Loading!</div></div>
+  // try not to have multiple return statements in render method
+  // multiple return statement, but in a render method
+
+  render() {
+    return (
+      <div className="border red">
+        {this.renderContent()}
+      </div>
+    )
 
     // return (
     //   <div className="App">
